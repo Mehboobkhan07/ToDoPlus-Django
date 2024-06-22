@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>To-Do List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #cf6911;
+        }
+        .todo-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #ebebeb; /* Brown color */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .form-group button {
+            width: 100%;
+        }
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #a7e50b;
+        }
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        .task-item p {
+            margin: 0;
+        }
+        .btn-update {
+            margin-left: 10px;
+        }
+        .btn-delete {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h3 class="text-center">To Do</h3>
+        <form method="POST" class="mb-4">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% for task in tasks %}
+            <div class="task-item">
+                <p>{{ task }}</p>
+                <div>
+                    <a href="{% url 'update_task' task.id %}" class="btn btn-info btn-sm btn-update">Update</a>
+                    <a href="{% url 'delete' task.id %}" class="btn btn-danger btn-sm btn-delete">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
